@@ -12,7 +12,7 @@ def get_pages():
     response = requests.get('https://slack.com/api/files.list', params=payload).json()
     return response['paging']['pages']
 
-def get_files():
+def get_files(sort_by='created', reverse=False):
     files = []
     for page in range(1, get_pages() + 1):
         payload = {
@@ -22,15 +22,14 @@ def get_files():
         response = requests.get('https://slack.com/api/files.list', params=payload).json()
         files += response['files']
 
-    return sorted(files, key=itemgetter('created'))
+    return sorted(files, key=itemgetter(sort_by), reverse=reverse)
 
-def delete_files(n):
+def delete_files(ids):
     """Delete the n oldest files."""
-    files = get_files()
-    for file in files[:n]:
+    for id in ids:
         data = {
             'token': token,
-            'file': file['id'],
+            'file': id,
         }
         requests.post('https://slack.com/api/files.delete', data=data)
 
