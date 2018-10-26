@@ -1,0 +1,12 @@
+[tool.poetry]
+name = "filekeeper"
+version = "0.1.0"
+description = ""
+authors = ["Aaron Ang <awz.ang@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "*"
+requests = "^2.19"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.0"
